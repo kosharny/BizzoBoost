@@ -1,0 +1,9 @@
+onboarding_focus_energy
+onboarding_micro_wins
+onboarding_feedback
+onboarding_growth
+home_background_glow
+journal_background_soft
+activity_background_neon
+stat_background_analytics
+settings_background_depth

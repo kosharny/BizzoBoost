@@ -1,17 +1,15 @@
-//
-//  BizzoBoostApp.swift
-//  BizzoBoost
-//
-//  Created by Maksim Kosharny on 26.02.2026.
-//
-
 import SwiftUI
 
 @main
 struct BizzoBoostApp: App {
+    @StateObject private var viewModel = ViewModelBB()
+    @StateObject private var storeManager = StoreManagerBB.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainViewBB()
+                .environmentObject(viewModel)
+                .environmentObject(storeManager)
         }
     }
 }
