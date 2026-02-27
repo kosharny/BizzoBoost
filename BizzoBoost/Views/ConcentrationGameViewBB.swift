@@ -32,8 +32,8 @@ struct ConcentrationGameViewBB: View {
     @State private var isPlaying = false
     @State private var showingResults = false
     
-    @State private var targetX: CGFloat = UIScreen.main.bounds.width / 2
-    @State private var targetY: CGFloat = UIScreen.main.bounds.height / 2
+    @State private var targetX: CGFloat = 100
+    @State private var targetY: CGFloat = 100
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -78,7 +78,7 @@ struct ConcentrationGameViewBB: View {
                             Button {
                                 if currentLevelIndex < 9 {
                                     currentLevelIndex += 1
-                                    startGame()
+                                    startGame(in: UIScreen.main.bounds.size)
                                 } else {
                                     presentationMode.wrappedValue.dismiss()
                                 }
@@ -98,7 +98,7 @@ struct ConcentrationGameViewBB: View {
                                 .foregroundColor(.white.opacity(0.6))
                                 
                             Button {
-                                startGame()
+                                startGame(in: UIScreen.main.bounds.size)
                             } label: {
                                 Text("Retry")
                                     .font(.headline)
@@ -131,7 +131,7 @@ struct ConcentrationGameViewBB: View {
                             .multilineTextAlignment(.center)
                         
                         Button {
-                            startGame()
+                            startGame(in: UIScreen.main.bounds.size)
                         } label: {
                             Text("Start")
                                 .font(.headline)
@@ -157,25 +157,32 @@ struct ConcentrationGameViewBB: View {
                                 .foregroundColor(ThemeBB.neonMint)
                         }
                         .padding()
-                        Spacer()
-                    }
-                    
-                    Button {
-                        handleTap()
-                    } label: {
-                        Image("logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: level.targetSize, height: level.targetSize)
-                            .clipShape(Circle())
-                            .shadow(color: ThemeBB.neonMint.opacity(0.5), radius: 10)
-                    }
-                    .position(x: targetX, y: targetY)
-                    .onReceive(timer) { _ in
-                        if timeRemaining > 0 {
-                            timeRemaining -= 1
-                        } else {
-                            endGame()
+                        GeometryReader { geo in
+                            ZStack {
+                                Color.clear
+                                Button {
+                                    handleTap(in: geo.size)
+                                } label: {
+                                    Image(systemName: "bolt.shield.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundColor(ThemeBB.neonMint)
+                                        .frame(width: level.targetSize, height: level.targetSize)
+                                        .clipShape(Circle())
+                                        .shadow(color: ThemeBB.neonMint.opacity(0.5), radius: 10)
+                                }
+                                .position(x: targetX, y: targetY)
+                            }
+                            .onReceive(timer) { _ in
+                                if timeRemaining > 0 {
+                                    timeRemaining -= 1
+                                } else {
+                                    endGame()
+                                }
+                            }
+                            .onAppear {
+                                moveTarget(in: geo.size)
+                            }
                         }
                     }
                 }
@@ -188,29 +195,26 @@ struct ConcentrationGameViewBB: View {
         }
     }
     
-    private func startGame() {
+    private func startGame(in size: CGSize) {
         isPlaying = true
         showingResults = false
         score = 0
         timeRemaining = 30
-        moveTarget()
+        moveTarget(in: size)
     }
     
-    private func handleTap() {
+    private func handleTap(in size: CGSize) {
         score += 1
-        moveTarget()
+        moveTarget(in: size)
     }
     
-    private func moveTarget() {
+    private func moveTarget(in size: CGSize) {
         let level = ConcentrationLevelBB.allLevels[currentLevelIndex]
-        let safeXPadding = level.targetSize / 2 + 20
-        let safeYPadding = level.targetSize / 2 + 100 
+        let maxSafeX = max(size.width - level.targetSize, level.targetSize)
+        let maxSafeY = max(size.height - level.targetSize, level.targetSize)
         
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        
-        targetX = CGFloat.random(in: safeXPadding...(screenWidth - safeXPadding))
-        targetY = CGFloat.random(in: safeYPadding...(screenHeight - safeYPadding))
+        targetX = CGFloat.random(in: (level.targetSize / 2)...(maxSafeX - level.targetSize / 2))
+        targetY = CGFloat.random(in: (level.targetSize / 2)...(maxSafeY - level.targetSize / 2))
     }
     
     private func endGame() {

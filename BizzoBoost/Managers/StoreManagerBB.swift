@@ -113,6 +113,7 @@ final class StoreManagerBB: ObservableObject {
     }
     
     func restorePurchases() async {
+        try? await AppStore.sync()
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
                 purchasedProductIDs.insert(transaction.productID)
@@ -164,7 +165,11 @@ final class StoreManagerBB: ObservableObject {
         }
     }
     
-    // SKPaymentQueue delegate previously used for older StoreKit, no longer needed in V2 architecture.
+    nonisolated func paymentQueue(_ queue: SKPaymentQueue,
+                                  shouldAddStorePayment payment: SKPayment,
+                                  for product: SKProduct) -> Bool {
+        return true
+    }
 }
 
 extension StoreManagerBB {

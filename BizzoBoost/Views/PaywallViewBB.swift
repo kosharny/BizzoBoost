@@ -20,7 +20,7 @@ struct PaywallViewBB: View {
 
     var body: some View {
         ZStack {
-            targetTheme.backgroundGradient
+            Color(hex: targetTheme.colorHex)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {

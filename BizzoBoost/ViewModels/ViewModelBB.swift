@@ -45,21 +45,26 @@ class ViewModelBB: ObservableObject {
     }
     
     private func setupStoreKitSubscription() {
-        StoreManagerBB.shared.$purchasedProductIDs
-            .sink { [weak self] purchasedIDs in
+        Publishers.CombineLatest(StoreManagerBB.shared.$purchasedProductIDs, StoreManagerBB.shared.$entitlementsLoaded)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] purchasedIDs, entitlementsLoaded in
                 guard let self = self else { return }
-                let isPremium = !purchasedIDs.isEmpty
-                self.premiumEnabled = isPremium
-                StorageManagerBB.shared.setPremium(isPremium)
+                
+                // Only rewrite the user's premium state if StoreKit has finished loading the receipts
+                if entitlementsLoaded {
+                    let isPremium = !purchasedIDs.isEmpty
+                    self.premiumEnabled = isPremium
+                    StorageManagerBB.shared.setPremium(isPremium)
 
-                let savedThemeID = StorageManagerBB.shared.getSelectedThemeID()
-                let resolvedTheme = ViewModelBB.resolveTheme(
-                    id: savedThemeID,
-                    isPremium: isPremium
-                )
+                    let savedThemeID = StorageManagerBB.shared.getSelectedThemeID()
+                    let resolvedTheme = ViewModelBB.resolveTheme(
+                        id: savedThemeID,
+                        isPremium: isPremium
+                    )
 
-                if self.currentTheme.id != resolvedTheme.id {
-                    self.currentTheme = resolvedTheme
+                    if self.currentTheme.id != resolvedTheme.id {
+                        self.currentTheme = resolvedTheme
+                    }
                 }
             }
             .store(in: &cancellables)
@@ -145,7 +150,7 @@ class ViewModelBB: ObservableObject {
 
     func todaysGoals() -> [GoalModelBB] {
         let today = Calendar.current.startOfDay(for: Date())
-        return goals.filter { Calendar.current.isDate($0.date, inSameDayAs: today) }
+        return goals.filter { Calendar.current.isDate($0.date, inSameDayAs: today) && $0.category != "Thoughts" }
     }
 
     func completedGoals() -> [GoalModelBB] {

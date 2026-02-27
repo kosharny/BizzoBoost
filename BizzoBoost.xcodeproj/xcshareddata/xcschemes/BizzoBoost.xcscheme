@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "2620"
+   LastUpgradeVersion = "2630"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD047F842F508CE300108CB9"
+               BlueprintIdentifier = "AABB7F842F508CE300108CB9"
                BuildableName = "BizzoBoost.app"
                BlueprintName = "BizzoBoost"
                ReferencedContainer = "container:BizzoBoost.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DD047F842F508CE300108CB9"
+            BlueprintIdentifier = "AABB7F842F508CE300108CB9"
             BuildableName = "BizzoBoost.app"
             BlueprintName = "BizzoBoost"
             ReferencedContainer = "container:BizzoBoost.xcodeproj">
@@ -64,7 +64,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DD047F842F508CE300108CB9"
+            BlueprintIdentifier = "AABB7F842F508CE300108CB9"
             BuildableName = "BizzoBoost.app"
             BlueprintName = "BizzoBoost"
             ReferencedContainer = "container:BizzoBoost.xcodeproj">

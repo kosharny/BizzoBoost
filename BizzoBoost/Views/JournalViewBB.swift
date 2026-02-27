@@ -138,28 +138,30 @@ struct JournalViewBB: View {
                     }
                 }
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Image(systemName: "lightbulb.fill")
-                            .foregroundColor(ThemeBB.premiumGold)
-                        Text("How it works")
-                            .font(.headline)
-                            .foregroundColor(.white)
+                if viewModel.completedGoals().isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "lightbulb.fill")
+                                .foregroundColor(ThemeBB.premiumGold)
+                            Text("How it works")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        }
+                        Text("This is your history. Tap any completed goal below to attach a personal note or a photo to preserve your memories of achieving it.")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.7))
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Text("This is your history. Tap any completed goal below to attach a personal note or a photo to preserve your memories of achieving it.")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.7))
-                        .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .background(ThemeBB.premiumGold.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(ThemeBB.premiumGold.opacity(0.3), lineWidth: 1)
+                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, 110)
                 }
-                .padding()
-                .background(ThemeBB.premiumGold.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(ThemeBB.premiumGold.opacity(0.3), lineWidth: 1)
-                )
-                .padding(.horizontal)
-                .padding(.bottom, 110)
             }
         }
         .sheet(item: $selectedGoal) { goal in

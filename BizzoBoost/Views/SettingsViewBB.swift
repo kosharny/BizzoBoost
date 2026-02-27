@@ -17,6 +17,15 @@ struct SettingsContentViewBB: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
+                        HStack {
+                            Text("Settings")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 10)
                         
                         // Themes Carousel
                         VStack(alignment: .leading, spacing: 16) {
@@ -103,7 +112,7 @@ struct SettingsContentViewBB: View {
                                 
                                 Divider().background(.white.opacity(0.2))
                                 
-                                NavigationLink(destination: WebViewBB(urlString: "https://www.youtube.com/watch?v=ZXsQAXx_ao0").navigationTitle("Tutorial")) {
+                                NavigationLink(destination: WebViewBB(urlString: "https://www.youtube.com/watch?v=bBgcl5Y8Wyg").navigationTitle("Tutorial")) {
                                     HStack {
                                         Text("Watch Tutorial")
                                             .foregroundColor(.white)
@@ -121,9 +130,7 @@ struct SettingsContentViewBB: View {
                     }
                     .padding(.bottom, 100)
                 }
-                .navigationTitle("Settings")
-                .toolbarColorScheme(.dark, for: .navigationBar)
-                .toolbarBackground(.hidden, for: .navigationBar)
+                .navigationBarHidden(true)
             }
         }
         .sheet(item: $selectedThemeForPaywall) { theme in

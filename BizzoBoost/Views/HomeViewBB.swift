@@ -35,24 +35,24 @@ struct HomeViewBB: View {
                     VStack(spacing: 16) {
                         let todaysGoals = viewModel.todaysGoals()
                         if todaysGoals.isEmpty {
-                                VStack(spacing: 16) {
+                                VStack(spacing: 8) {
                                     Image(systemName: "sparkles")
-                                        .font(.system(size: 40))
+                                        .font(.system(size: 32))
                                         .foregroundColor(ThemeBB.premiumGold)
-                                        .padding(.bottom, 8)
+                                        .padding(.bottom, 4)
                                     
                                     Text("Ready to Boost?")
-                                        .font(.title2)
+                                        .font(.title3)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
                                     
                                     Text("Every great journey begins with a single step. Tap Boost below to add your first goal and start building your productivity streak!")
-                                        .font(.body)
+                                        .font(.subheadline)
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white.opacity(0.8))
-                                        .padding(.horizontal)
+                                        .padding(.horizontal, 8)
                                 }
-                                .padding(24)
+                                .padding(16)
                                 .background {
                                     RoundedRectangle(cornerRadius: 24)
                                         .fill(.ultraThinMaterial)
@@ -63,7 +63,7 @@ struct HomeViewBB: View {
                                         .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
                                 }
                                 .padding(.horizontal)
-                                .padding(.top, 40)
+                                .padding(.top, 20)
                         } else {
                             ForEach(todaysGoals) { goal in
                                 GoalCardBB(goal: goal) {

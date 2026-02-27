@@ -9,14 +9,23 @@ class StorageManagerBB {
     private let premiumKey = "premiumEnabledBB"
     private let selectedThemeKey = "selectedThemeKeyBB"
 
+    private var goalsFileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("goalsBB.json")
+    }
+
     func saveGoals(_ goals: [GoalModelBB]) {
         if let data = try? JSONEncoder().encode(goals) {
-            UserDefaults.standard.set(data, forKey: goalsKey)
+            try? data.write(to: goalsFileURL, options: .atomic)
         }
     }
 
     func loadGoals() -> [GoalModelBB] {
-        if let data = UserDefaults.standard.data(forKey: goalsKey),
+        if let data = try? Data(contentsOf: goalsFileURL),
+           let goals = try? JSONDecoder().decode([GoalModelBB].self, from: data) {
+            return goals
+        }
+        // Fallback to UserDefaults if FileManager is empty (for backwards compatibility just in case)
+        if let data = UserDefaults.standard.data(forKey: "goalsKeyBB"),
            let goals = try? JSONDecoder().decode([GoalModelBB].self, from: data) {
             return goals
         }

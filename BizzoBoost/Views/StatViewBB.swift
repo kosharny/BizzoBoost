@@ -28,6 +28,7 @@ struct StatViewBB: View {
                                 .foregroundColor(.white.opacity(0.7))
                             Text("\(animatedPoints)")
                                 .font(.system(size: 48, weight: .bold))
+                                .contentTransition(.numericText())
                                 .foregroundColor(ThemeBB.neonMint)
                                 .onAppear {
                                     withAnimation(.easeOut(duration: 1.5)) {
