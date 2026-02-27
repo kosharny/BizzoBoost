@@ -12,8 +12,8 @@ struct SettingsContentViewBB: View {
     var body: some View {
         NavigationView {
             ZStack {
-                viewModel.currentTheme.backgroundGradient
-                .ignoresSafeArea()
+                VolumetricBackgroundBB(theme: viewModel.currentTheme)
+                    .ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {

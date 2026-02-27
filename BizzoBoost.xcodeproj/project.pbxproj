@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		AABB7F952F508DCE00108CB9 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F942F508DCE00108CB9 /* FirebaseAnalyticsCore */; };
-        AABB7F972F508DCE00108CB9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F962F508DCE00108CB9 /* FirebaseAuth */; };
-        AABB7F992F508DCE00108CB9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F982F508DCE00108CB9 /* FirebaseFirestore */; };
-        AABB7F9B2F508DCE00108CB9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */; };
+		AABB7F972F508DCE00108CB9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F962F508DCE00108CB9 /* FirebaseAuth */; };
+		AABB7F992F508DCE00108CB9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F982F508DCE00108CB9 /* FirebaseFirestore */; };
+		AABB7F9B2F508DCE00108CB9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-    AABB7F852F508CE300108CB9 /* BizzoBoost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BizzoBoost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AABB7F852F508CE300108CB9 /* BizzoBoost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BizzoBoost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-    AABB7F872F508CE300108CB9 /* BizzoBoost */ = {
+		AABB7F872F508CE300108CB9 /* BizzoBoost */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BizzoBoost;
 			sourceTree = "<group>";
@@ -26,32 +26,32 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-    AABB7F822F508CE300108CB9 /* Frameworks */ = {
+		AABB7F822F508CE300108CB9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-                     AABB7F9B2F508DCE00108CB9 /* FirebaseMessaging in Frameworks */,
-                     AABB7F952F508DCE00108CB9 /* FirebaseAnalyticsCore in Frameworks */,
-                     AABB7F972F508DCE00108CB9 /* FirebaseAuth in Frameworks */,
-                     AABB7F992F508DCE00108CB9 /* FirebaseFirestore in Frameworks */,
+				AABB7F9B2F508DCE00108CB9 /* FirebaseMessaging in Frameworks */,
+				AABB7F952F508DCE00108CB9 /* FirebaseAnalyticsCore in Frameworks */,
+				AABB7F972F508DCE00108CB9 /* FirebaseAuth in Frameworks */,
+				AABB7F992F508DCE00108CB9 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-    AABB7F7C2F508CE300108CB9 = {
+		AABB7F7C2F508CE300108CB9 = {
 			isa = PBXGroup;
 			children = (
-                        AABB7F872F508CE300108CB9 /* BizzoBoost */,
-                        AABB7F862F508CE300108CB9 /* Products */,
+				AABB7F872F508CE300108CB9 /* BizzoBoost */,
+				AABB7F862F508CE300108CB9 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-    AABB7F862F508CE300108CB9 /* Products */ = {
+		AABB7F862F508CE300108CB9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-                        AABB7F852F508CE300108CB9 /* BizzoBoost.app */,
+				AABB7F852F508CE300108CB9 /* BizzoBoost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,27 +59,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-    AABB7F842F508CE300108CB9 /* BizzoBoost */ = {
+		AABB7F842F508CE300108CB9 /* BizzoBoost */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AABB7F902F508CE600108CB9 /* Build configuration list for PBXNativeTarget "BizzoBoost" */;
 			buildPhases = (
-                           AABB7F812F508CE300108CB9 /* Sources */,
-                           AABB7F822F508CE300108CB9 /* Frameworks */,
-                           AABB7F832F508CE300108CB9 /* Resources */,
+				AABB7F812F508CE300108CB9 /* Sources */,
+				AABB7F822F508CE300108CB9 /* Frameworks */,
+				AABB7F832F508CE300108CB9 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-                                            AABB7F872F508CE300108CB9 /* BizzoBoost */,
+				AABB7F872F508CE300108CB9 /* BizzoBoost */,
 			);
 			name = BizzoBoost;
 			packageProductDependencies = (
-                                          AABB7F942F508DCE00108CB9 /* FirebaseAnalyticsCore */,
-                                          AABB7F962F508DCE00108CB9 /* FirebaseAuth */,
-                                          AABB7F982F508DCE00108CB9 /* FirebaseFirestore */,
-                                          AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */,
+				AABB7F942F508DCE00108CB9 /* FirebaseAnalyticsCore */,
+				AABB7F962F508DCE00108CB9 /* FirebaseAuth */,
+				AABB7F982F508DCE00108CB9 /* FirebaseFirestore */,
+				AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */,
 			);
 			productName = BizzoBoost;
 			productReference = AABB7F852F508CE300108CB9 /* BizzoBoost.app */;
@@ -88,14 +88,14 @@
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-    AABB7F7D2F508CE300108CB9 /* Project object */ = {
+		AABB7F7D2F508CE300108CB9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
-                    AABB7F842F508CE300108CB9 = {
+					AABB7F842F508CE300108CB9 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -110,20 +110,20 @@
 			mainGroup = AABB7F7C2F508CE300108CB9;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-                                 AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AABB7F862F508CE300108CB9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-                       AABB7F842F508CE300108CB9 /* BizzoBoost */,
+				AABB7F842F508CE300108CB9 /* BizzoBoost */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-    AABB7F832F508CE300108CB9 /* Resources */ = {
+		AABB7F832F508CE300108CB9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -133,7 +133,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-    AABB7F812F508CE300108CB9 /* Sources */ = {
+		AABB7F812F508CE300108CB9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -143,7 +143,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-    AABB7F8E2F508CE600108CB9 /* Debug */ = {
+		AABB7F8E2F508CE600108CB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -208,7 +208,7 @@
 			};
 			name = Debug;
 		};
-    AABB7F8F2F508CE600108CB9 /* Release */ = {
+		AABB7F8F2F508CE600108CB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -266,7 +266,7 @@
 			};
 			name = Release;
 		};
-    AABB7F912F508CE600108CB9 /* Debug */ = {
+		AABB7F912F508CE600108CB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -304,7 +304,7 @@
 			};
 			name = Debug;
 		};
-    AABB7F922F508CE600108CB9 /* Release */ = {
+		AABB7F922F508CE600108CB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -345,20 +345,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-    AABB7F802F508CE300108CB9 /* Build configuration list for PBXProject "BizzoBoost" */ = {
+		AABB7F802F508CE300108CB9 /* Build configuration list for PBXProject "BizzoBoost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-                                   AABB7F8E2F508CE600108CB9 /* Debug */,
-                                   AABB7F8F2F508CE600108CB9 /* Release */,
+				AABB7F8E2F508CE600108CB9 /* Debug */,
+				AABB7F8F2F508CE600108CB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-    AABB7F902F508CE600108CB9 /* Build configuration list for PBXNativeTarget "BizzoBoost" */ = {
+		AABB7F902F508CE600108CB9 /* Build configuration list for PBXNativeTarget "BizzoBoost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-                                   AABB7F912F508CE600108CB9 /* Debug */,
-                                   AABB7F922F508CE600108CB9 /* Release */,
+				AABB7F912F508CE600108CB9 /* Debug */,
+				AABB7F922F508CE600108CB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -366,7 +366,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-    AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -377,22 +377,22 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-    AABB7F942F508DCE00108CB9 /* FirebaseAnalyticsCore */ = {
+		AABB7F942F508DCE00108CB9 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsCore;
 		};
-    AABB7F962F508DCE00108CB9 /* FirebaseAuth */ = {
+		AABB7F962F508DCE00108CB9 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-    AABB7F982F508DCE00108CB9 /* FirebaseFirestore */ = {
+		AABB7F982F508DCE00108CB9 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-    AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */ = {
+		AABB7F9A2F508DCE00108CB9 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AABB7F932F508DCE00108CB9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;

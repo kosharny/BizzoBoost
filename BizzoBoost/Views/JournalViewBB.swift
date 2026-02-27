@@ -3,11 +3,11 @@ import SwiftUI
 struct JournalViewBB: View {
     @EnvironmentObject var viewModel: ViewModelBB
     @State private var selectedGoal: GoalModelBB?
-    @State private var showAddThought: Bool = false
+    @State private var inlineThought: String = ""
 
     var body: some View {
         ZStack {
-            viewModel.currentTheme.backgroundGradient
+            VolumetricBackgroundBB(theme: viewModel.currentTheme)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -34,7 +34,8 @@ struct JournalViewBB: View {
                                     .font(.headline)
                                     .foregroundColor(isToday ? ThemeBB.neonMint : .white)
                             }
-                            .padding()
+                            .padding(.vertical, 24)
+                            .padding(.horizontal, 16)
                             .background {
                                 if isToday {
                                     ThemeBB.neonMint.opacity(0.2)
@@ -42,7 +43,7 @@ struct JournalViewBB: View {
                                     Rectangle().fill(.ultraThinMaterial)
                                 }
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                         }
                     }
                     .padding()
@@ -53,27 +54,64 @@ struct JournalViewBB: View {
                         .font(.headline)
                         .foregroundColor(.white.opacity(0.8))
                     Spacer()
-                    Button {
-                        showAddThought = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Add Thought")
-                        }
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(ThemeBB.primaryIndigo)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(ThemeBB.neonMint)
-                        .clipShape(Capsule())
-                    }
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 10)
 
                 ScrollView {
                     
+                    
+                    // Inline Add Thought Card
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            Image(systemName: "square.and.pencil")
+                                .foregroundColor(ThemeBB.neonMint)
+                            Text("Quick Log")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        }
+                        
+                        ZStack(alignment: .topLeading) {
+                            TextEditor(text: $inlineThought)
+                                .frame(height: 80)
+                                .padding(8)
+                                .scrollContentBackground(.hidden)
+                                .background(Color.white.opacity(0.1))
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                            
+                            if inlineThought.isEmpty {
+                                Text("What's on your mind today?")
+                                    .foregroundColor(.white.opacity(0.4))
+                                    .padding(.top, 16)
+                                    .padding(.leading, 12)
+                                    .allowsHitTesting(false)
+                            }
+                        }
+                        
+                        Button {
+                            if !inlineThought.isEmpty {
+                                let newID = viewModel.addGoal(title: "Journal Entry", category: "Thoughts", note: inlineThought, photoData: nil)
+                                viewModel.toggleGoalCompletion(id: newID) // Auto complete specific goal
+                                inlineThought = ""
+                            }
+                        } label: {
+                            Text("Save Thought")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(inlineThought.isEmpty ? Color.gray.opacity(0.5) : ThemeBB.electricBlue)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                        .disabled(inlineThought.isEmpty)
+                    }
+                    .padding()
+                    .background(ThemeBB.primaryIndigo.opacity(0.6))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
                     
                     let completed = viewModel.completedGoals()
                     if completed.isEmpty {
@@ -134,41 +172,45 @@ struct JournalViewBB: View {
                             }
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 100)
                     }
-                }
-                
-                if viewModel.completedGoals().isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
+                    
+                    // Permanent How it works card at bottom of scroll (moved outside else wrapper)
+                    VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Image(systemName: "lightbulb.fill")
+                                .font(.title2)
                                 .foregroundColor(ThemeBB.premiumGold)
                             Text("How it works")
-                                .font(.headline)
+                                .font(.title3)
+                                .fontWeight(.bold)
                                 .foregroundColor(.white)
                         }
-                        Text("This is your history. Tap any completed goal below to attach a personal note or a photo to preserve your memories of achieving it.")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
+                        Text("This is your history. Tap any completed goal above to attach a personal note or a photo to preserve your memories of achieving it.")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding()
-                    .background(ThemeBB.premiumGold.opacity(0.1))
+                    .background(ThemeBB.premiumGold.opacity(0.15))
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(ThemeBB.premiumGold.opacity(0.3), lineWidth: 1)
+                            .stroke(ThemeBB.premiumGold.opacity(0.4), lineWidth: 1)
                     )
                     .padding(.horizontal)
-                    .padding(.bottom, 110)
+                    .padding(.top, 20)
+                    
+                    Spacer(minLength: 100)
                 }
+                
             }
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
         .sheet(item: $selectedGoal) { goal in
             JournalDetailViewBB(goal: goal)
-        }
-        .sheet(isPresented: $showAddThought) {
-            AddThoughtViewBB()
         }
     }
 }

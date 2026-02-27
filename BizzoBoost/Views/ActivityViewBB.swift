@@ -7,7 +7,7 @@ struct ActivityViewBB: View {
     var body: some View {
         NavigationView {
             ZStack {
-                viewModel.currentTheme.backgroundGradient
+                VolumetricBackgroundBB(theme: viewModel.currentTheme)
                     .ignoresSafeArea()
     
                 VStack(spacing: 0) {
@@ -118,7 +118,79 @@ struct ActivityViewBB: View {
                                     .padding()
                                     .background(.ultraThinMaterial)
                                     .clipShape(RoundedRectangle(cornerRadius: 16))
-                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(ThemeBB.neonMint.opacity(0.5), lineWidth: 1))
+                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(ThemeBB.neonMint.opacity(0.4), lineWidth: 1))
+                                }
+                                
+                                NavigationLink(destination: BreathingExerciseViewBB()) {
+                                    HStack {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text("Breathing Exercise")
+                                                .font(.title2)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.white)
+                                            
+                                            Text("Reduce stress. Choose Box, 4-7-8, or Deep Calm breathing patterns.")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white.opacity(0.7))
+                                                .multilineTextAlignment(.leading)
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "wind")
+                                            .font(.system(size: 40))
+                                            .foregroundColor(ThemeBB.electricBlue)
+                                    }
+                                    .padding()
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(ThemeBB.electricBlue.opacity(0.4), lineWidth: 1))
+                                }
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 16) {
+                                Text("Productivity Tools")
+                                    .font(.headline)
+                                    .foregroundColor(.white.opacity(0.8))
+                                
+                                NavigationLink(destination: FocusTimerViewBB()) {
+                                    HStack {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text("Focus Timer")
+                                                .font(.title2).fontWeight(.bold).foregroundColor(.white)
+                                            Text("Pomodoro technique — 25 min focus, 5 min break. Earn pts per session.")
+                                                .font(.subheadline).foregroundColor(.white.opacity(0.7))
+                                                .multilineTextAlignment(.leading)
+                                        }
+                                        Spacer()
+                                        Image(systemName: "timer")
+                                            .font(.system(size: 40))
+                                            .foregroundColor(ThemeBB.premiumGold)
+                                    }
+                                    .padding()
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(ThemeBB.premiumGold.opacity(0.4), lineWidth: 1))
+                                }
+                                
+                                NavigationLink(destination: HabitTrackerViewBB()) {
+                                    HStack {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text("Daily Habits")
+                                                .font(.title2).fontWeight(.bold).foregroundColor(.white)
+                                            Text("Track recurring habits. See your 7-day streaks and stay consistent.")
+                                                .font(.subheadline).foregroundColor(.white.opacity(0.7))
+                                                .multilineTextAlignment(.leading)
+                                        }
+                                        Spacer()
+                                        Image(systemName: "checkmark.seal.fill")
+                                            .font(.system(size: 40))
+                                            .foregroundColor(ThemeBB.neonMint)
+                                    }
+                                    .padding()
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(ThemeBB.neonMint.opacity(0.4), lineWidth: 1))
                                 }
                             }
                         }

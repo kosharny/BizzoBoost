@@ -6,7 +6,7 @@ struct StatViewBB: View {
 
     var body: some View {
         ZStack {
-            viewModel.currentTheme.backgroundGradient
+            VolumetricBackgroundBB(theme: viewModel.currentTheme)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -23,33 +23,101 @@ struct StatViewBB: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         VStack(spacing: 8) {
-                            Text("Total Points")
-                                .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.7))
+                            HStack {
+                                Image(systemName: "star.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(ThemeBB.premiumGold)
+                                Text("Total Points")
+                                    .font(.headline)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
                             Text("\(animatedPoints)")
-                                .font(.system(size: 48, weight: .bold))
+                                .font(.system(size: 60, weight: .heavy))
                                 .contentTransition(.numericText())
                                 .foregroundColor(ThemeBB.neonMint)
+                                .shadow(color: ThemeBB.neonMint.opacity(0.4), radius: 10, y: 5)
                                 .onAppear {
                                     withAnimation(.easeOut(duration: 1.5)) {
                                         animatedPoints = viewModel.points
                                     }
                                 }
                         }
-                        .padding(.vertical, 20)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 30)
+                        .background(
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(.ultraThinMaterial)
+                                .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(ThemeBB.premiumGold.opacity(0.3), lineWidth: 1)
+                                )
+                        )
 
+                        // Weekly Heatmap
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Image(systemName: "calendar.badge.checkmark")
+                                    .foregroundColor(ThemeBB.neonMint)
+                                Text("This Week")
+                                    .font(.title3).fontWeight(.bold).foregroundColor(.white)
+                            }
+                            HStack(spacing: 8) {
+                                ForEach(0..<7, id: \.self) { offset in
+                                    let date = Calendar.current.date(byAdding: .day, value: offset - 6, to: Date())!
+                                    let count = viewModel.goals.filter {
+                                        $0.isCompleted && Calendar.current.isDate($0.date, inSameDayAs: date)
+                                    }.count
+                                    let isToday = Calendar.current.isDateInToday(date)
+                                    VStack(spacing: 6) {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(count == 0 ? Color.white.opacity(0.07)
+                                                : count == 1 ? ThemeBB.neonMint.opacity(0.35)
+                                                : count <= 3 ? ThemeBB.neonMint.opacity(0.65)
+                                                : ThemeBB.neonMint)
+                                            .frame(height: 44)
+                                            .overlay(
+                                                Text(count > 0 ? "\(count)" : "")
+                                                    .font(.caption2).fontWeight(.bold)
+                                                    .foregroundColor(.white)
+                                            )
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(isToday ? ThemeBB.premiumGold : Color.clear, lineWidth: 1.5)
+                                            )
+                                        Text(dayLabel(date))
+                                            .font(.system(size: 9))
+                                            .foregroundColor(isToday ? ThemeBB.premiumGold : .white.opacity(0.4))
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .overlay(RoundedRectangle(cornerRadius: 20).stroke(ThemeBB.neonMint.opacity(0.2), lineWidth: 1))
+                        
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("Categories")
-                                .font(.headline)
-                                .foregroundColor(.white.opacity(0.8))
+                            HStack {
+                                Image(systemName: "chart.pie.fill")
+                                    .foregroundColor(ThemeBB.electricBlue)
+                                Text("Categories")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
                             
-                            HStack(spacing: 30) {
+                            HStack(spacing: 20) {
                                 Spacer()
                                 
                                 PieChartBB(goals: viewModel.goals)
-                                    .frame(width: 120, height: 120)
+                                    .frame(width: 140, height: 140)
+                                    .shadow(color: .black.opacity(0.3), radius: 10, y: 5)
                                 
-                                VStack(alignment: .leading, spacing: 12) {
+                                Spacer()
+                                
+                                VStack(alignment: .leading, spacing: 16) {
                                     LegendRowBB(color: ThemeBB.neonMint, title: "Habits")
                                     LegendRowBB(color: ThemeBB.electricBlue, title: "Study")
                                     LegendRowBB(color: ThemeBB.accentGlow, title: "Sport")
@@ -57,15 +125,27 @@ struct StatViewBB: View {
                                 
                                 Spacer()
                             }
-                            .padding()
-                            .background(.ultraThinMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .padding(.vertical, 24)
+                            .background(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(.ultraThinMaterial)
+                                    .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .stroke(ThemeBB.electricBlue.opacity(0.3), lineWidth: 1)
+                                    )
+                            )
                         }
                         
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("Weekly Progress")
-                                .font(.headline)
-                                .foregroundColor(.white.opacity(0.8))
+                            HStack {
+                                Image(systemName: "chart.xyaxis.line")
+                                    .foregroundColor(ThemeBB.neonMint)
+                                Text("Weekly Progress")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
                             
                             LineChartBB(goals: viewModel.goals)
                                 .frame(height: 200)
@@ -75,9 +155,14 @@ struct StatViewBB: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("Activity Rewards")
-                                .font(.headline)
-                                .foregroundColor(.white.opacity(0.8))
+                            HStack {
+                                Image(systemName: "gift.fill")
+                                    .foregroundColor(ThemeBB.premiumGold)
+                                Text("Activity Rewards")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
                             
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                                 ForEach(ActivityLevelBB.allCases, id: \.self) { level in
@@ -122,6 +207,12 @@ struct StatViewBB: View {
         case .sprinter: return "bolt.shield.fill"
         case .rhythmMaster: return "crown.fill"
         }
+    }
+    
+    private func dayLabel(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E"
+        return String(formatter.string(from: date).prefix(1))
     }
 }
 

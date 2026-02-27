@@ -9,6 +9,12 @@ class ViewModelBB: ObservableObject {
         }
     }
     
+    @Published var habits: [HabitModelBB] = [] {
+        didSet {
+            StorageManagerBB.shared.saveHabits(habits)
+        }
+    }
+    
     @Published var points: Int = 0 {
         didSet {
             StorageManagerBB.shared.savePoints(points)
@@ -19,6 +25,7 @@ class ViewModelBB: ObservableObject {
     @Published var isOnboardingCompleted: Bool = StorageManagerBB.shared.isOnboardingCompleted()
     @Published var currentLevel: ActivityLevelBB = .rookie
     @Published var activeTab: TabBB = .home
+    @Published var hideTabBar: Bool = false
     @Published var streak: Int = 0
     
     // StoreKit & Premium State
@@ -32,6 +39,7 @@ class ViewModelBB: ObservableObject {
 
     init() {
         goals = StorageManagerBB.shared.loadGoals()
+        habits = StorageManagerBB.shared.loadHabits()
         points = StorageManagerBB.shared.loadPoints()
         
         let initialPremium = StorageManagerBB.shared.isPremium()
@@ -99,9 +107,30 @@ class ViewModelBB: ObservableObject {
         isOnboardingCompleted = true
     }
 
-    func addGoal(title: String, category: String, note: String?, photoData: Data?) {
+    @discardableResult
+    func addGoal(title: String, category: String, note: String?, photoData: Data?) -> UUID {
         let newGoal = GoalModelBB(title: title, category: category, date: Date(), isCompleted: false, points: 50, note: note, photoData: photoData)
         goals.append(newGoal)
+        return newGoal.id
+    }
+    
+    func addHabit(title: String, icon: String) {
+        let habit = HabitModelBB(title: title, icon: icon)
+        habits.append(habit)
+    }
+    
+    func checkOffHabit(id: UUID) {
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        let today = Date()
+        let alreadyDone = habits[index].isCompletedToday()
+        if !alreadyDone {
+            habits[index].completedDates.append(today)
+            points += 15
+        }
+    }
+    
+    func deleteHabit(id: UUID) {
+        habits.removeAll { $0.id == id }
     }
 
     func toggleGoalCompletion(id: UUID) {
@@ -150,11 +179,50 @@ class ViewModelBB: ObservableObject {
 
     func todaysGoals() -> [GoalModelBB] {
         let today = Calendar.current.startOfDay(for: Date())
-        return goals.filter { Calendar.current.isDate($0.date, inSameDayAs: today) && $0.category != "Thoughts" }
+        return goals.filter {
+            Calendar.current.isDate($0.date, inSameDayAs: today)
+            && $0.category != "Thoughts"
+            && $0.category != "Mood"
+        }
     }
 
     func completedGoals() -> [GoalModelBB] {
         return goals.filter { $0.isCompleted }.sorted(by: { $0.date > $1.date })
+    }
+    
+    // MARK: - Daily Mood
+    private var todayDateKey: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return "mood_" + formatter.string(from: Date())
+    }
+    
+    func todaysMoodIndex() -> Int? {
+        let stored = UserDefaults.standard.integer(forKey: todayDateKey)
+        // 0 means never set (UserDefaults returns 0 for missing Int keys), we offset by 1
+        let raw = UserDefaults.standard.object(forKey: todayDateKey)
+        return raw == nil ? nil : stored - 1
+    }
+    
+    func logMood(index: Int, emoji: String, label: String) {
+        // Persist for the day (store index + 1 so 0 can serve as sentinel)
+        UserDefaults.standard.set(index + 1, forKey: todayDateKey)
+        // Avoid duplicate journal entries for the same day
+        let today = Calendar.current.startOfDay(for: Date())
+        let alreadyLogged = goals.contains {
+            $0.category == "Mood" && Calendar.current.isDate($0.date, inSameDayAs: today)
+        }
+        if !alreadyLogged {
+            let entry = GoalModelBB(
+                title: "\(emoji) \(label)",
+                category: "Mood",
+                date: Date(),
+                isCompleted: true,
+                points: 5
+            )
+            goals.append(entry)
+            points += 5
+        }
     }
 }
 

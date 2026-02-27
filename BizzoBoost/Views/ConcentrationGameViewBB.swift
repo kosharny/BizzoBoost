@@ -41,7 +41,7 @@ struct ConcentrationGameViewBB: View {
         let level = ConcentrationLevelBB.allLevels[currentLevelIndex]
         
         ZStack {
-            viewModel.currentTheme.backgroundGradient
+            GameParticleBackgroundBB(theme: viewModel.currentTheme)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -192,6 +192,10 @@ struct ConcentrationGameViewBB: View {
         .onAppear {
             let nextIndex = passedLevel
             currentLevelIndex = min(nextIndex, 9) // cap at level 10 (index 9)
+            viewModel.hideTabBar = true
+        }
+        .onDisappear {
+            viewModel.hideTabBar = false
         }
     }
     
@@ -226,5 +230,65 @@ struct ConcentrationGameViewBB: View {
                 passedLevel = level.levelNumber
             }
         }
+    }
+}
+
+struct GameParticleBackgroundBB: View {
+    let theme: ThemeModelBB
+    @State private var phase = 0.0
+    
+    var body: some View {
+        ZStack {
+            theme.backgroundGradient
+                .ignoresSafeArea()
+            
+            GeometryReader { geo in
+                ForEach(0..<15, id: \.self) { index in
+                    GameParticleIconBB(
+                        index: index,
+                        theme: theme,
+                        phase: phase,
+                        width: geo.size.width,
+                        height: geo.size.height
+                    )
+                }
+            }
+        }
+        .onAppear {
+            phase = .pi * 2
+        }
+    }
+}
+
+struct GameParticleIconBB: View {
+    let index: Int
+    let theme: ThemeModelBB
+    let phase: Double
+    let width: CGFloat
+    let height: CGFloat
+    
+    @State private var size: CGFloat = CGFloat.random(in: 20...80)
+    @State private var startX: CGFloat = 0
+    @State private var startY: CGFloat = 0
+    @State private var animDuration: Double = Double.random(in: 5...10)
+    
+    var body: some View {
+        let isPrimary = (index % 2 == 0)
+        let primaryColor = Color(hex: theme.colorHex)
+        let color = isPrimary ? primaryColor : ThemeBB.premiumGold
+        
+        Circle()
+            .fill(color)
+            .frame(width: size)
+            .position(x: startX, y: startY)
+            .opacity(0.3)
+            .blur(radius: 15)
+            .offset(x: cos(phase + Double(index)) * 40,
+                    y: sin(phase + Double(index)) * 40)
+            .animation(.linear(duration: animDuration).repeatForever(autoreverses: true), value: phase)
+            .onAppear {
+                startX = .random(in: 0...width)
+                startY = .random(in: 0...height)
+            }
     }
 }

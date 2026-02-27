@@ -24,7 +24,15 @@ struct ThemeModelBB: Identifiable, Codable, Equatable {
                 endPoint: .bottomTrailing
             )
         default:
-            return ThemeBB.backgroundBase
+            return LinearGradient(
+                colors: [
+                    Color(hex: "#1A1B32"),
+                    Color(hex: "#1E3250"),
+                    Color(hex: "#1A3A42")
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
         }
     }
 }

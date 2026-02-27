@@ -27,8 +27,11 @@ struct MainViewBB: View {
                     SettingsViewBB()
                 }
 
-                TabBarBB()
+                if !viewModel.hideTabBar {
+                    TabBarBB()
+                }
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         } else {
             OnboardingContainerBB()
         }

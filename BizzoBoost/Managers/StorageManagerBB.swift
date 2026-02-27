@@ -13,6 +13,24 @@ class StorageManagerBB {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("goalsBB.json")
     }
 
+    private var habitsFileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("habitsBB.json")
+    }
+
+    func saveHabits(_ habits: [HabitModelBB]) {
+        if let data = try? JSONEncoder().encode(habits) {
+            try? data.write(to: habitsFileURL, options: .atomic)
+        }
+    }
+
+    func loadHabits() -> [HabitModelBB] {
+        if let data = try? Data(contentsOf: habitsFileURL),
+           let habits = try? JSONDecoder().decode([HabitModelBB].self, from: data) {
+            return habits
+        }
+        return []
+    }
+
     func saveGoals(_ goals: [GoalModelBB]) {
         if let data = try? JSONEncoder().encode(goals) {
             try? data.write(to: goalsFileURL, options: .atomic)
