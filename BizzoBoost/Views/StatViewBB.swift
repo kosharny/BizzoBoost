@@ -22,36 +22,64 @@ struct StatViewBB: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
-                        VStack(spacing: 8) {
-                            HStack {
-                                Image(systemName: "star.circle.fill")
-                                    .font(.title2)
-                                    .foregroundColor(ThemeBB.premiumGold)
-                                Text("Total Points")
-                                    .font(.headline)
-                                    .foregroundColor(.white.opacity(0.8))
-                            }
-                            Text("\(animatedPoints)")
-                                .font(.system(size: 60, weight: .heavy))
-                                .contentTransition(.numericText())
-                                .foregroundColor(ThemeBB.neonMint)
-                                .shadow(color: ThemeBB.neonMint.opacity(0.4), radius: 10, y: 5)
-                                .onAppear {
-                                    withAnimation(.easeOut(duration: 1.5)) {
-                                        animatedPoints = viewModel.points
-                                    }
-                                }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 30)
-                        .background(
+                        ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(.ultraThinMaterial)
-                                .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(ThemeBB.premiumGold.opacity(0.3), lineWidth: 1)
+                                .fill(
+                                    RadialGradient(gradient: Gradient(colors: [ThemeBB.premiumGold.opacity(0.4), ThemeBB.primaryIndigo]), center: .topTrailing, startRadius: 10, endRadius: 250)
                                 )
+                                .shadow(color: ThemeBB.premiumGold.opacity(0.2), radius: 10, y: 5)
+                            
+                            // Watermark
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 140))
+                                        .foregroundColor(ThemeBB.premiumGold.opacity(0.15))
+                                        .offset(x: 30, y: 40)
+                                }
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+
+                            VStack(spacing: 12) {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "star.circle.fill")
+                                        .font(.title2)
+                                        .foregroundColor(ThemeBB.premiumGold)
+                                    Text("Total Points")
+                                        .font(.headline)
+                                        .foregroundColor(.white.opacity(0.9))
+                                }
+                                Text("\(animatedPoints)")
+                                    .font(.system(size: 72, weight: .heavy, design: .rounded))
+                                    .contentTransition(.numericText())
+                                    .foregroundColor(ThemeBB.neonMint)
+                                    .shadow(color: ThemeBB.neonMint.opacity(0.4), radius: 10, y: 5)
+                                    .onAppear {
+                                        withAnimation(.easeOut(duration: 1.5)) {
+                                            animatedPoints = viewModel.points
+                                        }
+                                    }
+                                
+                                HStack(spacing: 4) {
+                                    Image(systemName: "flame.fill")
+                                        .foregroundColor(ThemeBB.premiumGold)
+                                    Text("Top 5% of Users")
+                                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                        .foregroundColor(ThemeBB.premiumGold)
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(ThemeBB.premiumGold.opacity(0.2))
+                                .clipShape(Capsule())
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 30)
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(ThemeBB.premiumGold.opacity(0.4), lineWidth: 1)
                         )
 
                         // Weekly Heatmap
@@ -98,44 +126,61 @@ struct StatViewBB: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .overlay(RoundedRectangle(cornerRadius: 20).stroke(ThemeBB.neonMint.opacity(0.2), lineWidth: 1))
                         
-                        VStack(alignment: .leading, spacing: 16) {
-                            HStack {
-                                Image(systemName: "chart.pie.fill")
-                                    .foregroundColor(ThemeBB.electricBlue)
-                                Text("Categories")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                            }
+                        ZStack(alignment: .topLeading) {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(
+                                    RadialGradient(gradient: Gradient(colors: [ThemeBB.electricBlue.opacity(0.4), ThemeBB.primaryIndigo]), center: .bottomLeading, startRadius: 10, endRadius: 300)
+                                )
+                                .shadow(color: ThemeBB.electricBlue.opacity(0.2), radius: 10, y: 5)
                             
-                            HStack(spacing: 20) {
+                            // Watermark
+                            VStack {
+                                HStack {
+                                    Image(systemName: "chart.pie.fill")
+                                        .font(.system(size: 140))
+                                        .foregroundColor(ThemeBB.electricBlue.opacity(0.15))
+                                        .offset(x: -30, y: -40)
+                                    Spacer()
+                                }
                                 Spacer()
-                                
-                                PieChartBB(goals: viewModel.goals)
-                                    .frame(width: 140, height: 140)
-                                    .shadow(color: .black.opacity(0.3), radius: 10, y: 5)
-                                
-                                Spacer()
-                                
-                                VStack(alignment: .leading, spacing: 16) {
-                                    LegendRowBB(color: ThemeBB.neonMint, title: "Habits")
-                                    LegendRowBB(color: ThemeBB.electricBlue, title: "Study")
-                                    LegendRowBB(color: ThemeBB.accentGlow, title: "Sport")
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+
+                            VStack(alignment: .leading, spacing: 16) {
+                                HStack {
+                                    Image(systemName: "chart.pie.fill")
+                                        .foregroundColor(ThemeBB.electricBlue)
+                                    Text("Categories")
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
                                 }
                                 
-                                Spacer()
+                                HStack(spacing: 20) {
+                                    Spacer()
+                                    
+                                    PieChartBB(goals: viewModel.goals)
+                                        .frame(width: 140, height: 140)
+                                        .shadow(color: .black.opacity(0.3), radius: 10, y: 5)
+                                    
+                                    Spacer()
+                                    
+                                    VStack(alignment: .leading, spacing: 16) {
+                                        LegendRowBB(color: ThemeBB.neonMint, title: "Habits")
+                                        LegendRowBB(color: ThemeBB.electricBlue, title: "Study")
+                                        LegendRowBB(color: ThemeBB.accentGlow, title: "Sport")
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                .padding(.vertical, 16)
                             }
-                            .padding(.vertical, 24)
-                            .background(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(.ultraThinMaterial)
-                                    .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 24)
-                                            .stroke(ThemeBB.electricBlue.opacity(0.3), lineWidth: 1)
-                                    )
-                            )
+                            .padding(20)
                         }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(ThemeBB.electricBlue.opacity(0.4), lineWidth: 1)
+                        )
                         
                         VStack(alignment: .leading, spacing: 16) {
                             HStack {

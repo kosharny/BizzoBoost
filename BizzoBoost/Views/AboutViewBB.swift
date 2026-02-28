@@ -36,6 +36,7 @@ struct AboutViewBB: View {
         }
         .navigationTitle("About App")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarColorScheme(.dark, for: .navigationBar)
     }
 }
 

@@ -47,7 +47,7 @@ struct PaywallViewBB: View {
                     
                     Text(targetTheme.title)
                         .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(ThemeBB.premiumGold)
+                        .foregroundColor(.white)
                     
                     Text("Unlock this exclusive premium theme")
                         .font(.headline)
@@ -98,15 +98,9 @@ struct PaywallViewBB: View {
                             .foregroundColor(ThemeBB.primaryIndigo)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(
-                                LinearGradient(
-                                    colors: [ThemeBB.premiumGold, ThemeBB.premiumGold.opacity(0.8)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
+                            .background(Color.white)
                             .cornerRadius(16)
-                            .shadow(color: ThemeBB.premiumGold.opacity(0.3), radius: 10)
+                            .shadow(color: Color.black.opacity(0.15), radius: 10)
                         }
                         
                         // Restore Button
@@ -136,13 +130,13 @@ struct PaywallViewBB: View {
                     VStack(spacing: 10) {
                         if store.isLoading {
                             ProgressView()
-                                .tint(ThemeBB.premiumGold)
+                                .tint(.white)
                             Text("Loading products...")
                                 .font(.caption)
                                 .foregroundColor(.white.opacity(0.6))
                         } else {
                             Image(systemName: "exclamationmark.triangle")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.white)
                             Text("Product not found")
                                 .foregroundColor(.white.opacity(0.6))
                             Text("ID: \(targetTheme.id)")
@@ -253,7 +247,7 @@ struct FeatureRowBB: View {
         HStack(spacing: 16) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(ThemeBB.premiumGold)
+                .foregroundColor(.white)
                 .frame(width: 40)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -273,7 +267,7 @@ struct FeatureRowBB: View {
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(ThemeBB.premiumGold.opacity(0.2), lineWidth: 1)
+                .stroke(Color.white.opacity(0.3), lineWidth: 1)
         )
     }
 }
